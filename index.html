@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pratik Vekariya - Portfolio</title>
+  <style>
+    /* Dark Theme Variables */
+    :root {
+      --bg-color: #121212;
+      --primary-color: #bb86fc;
+      --secondary-color: #03dac6;
+      --text-color: #e0e0e0;
+      --muted-text-color: #a0a0a0;
+      --accent-color: #3700b3;
+      --border-color: #222;
+      --hover-color: #3700b3;
+      --nav-bg: rgba(30, 30, 30, 0.95);
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Improved Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2rem;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      animation: slideDown 0.7s ease forwards;
+    }
+
+    nav h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      cursor: default;
+      letter-spacing: 0.1rem;
+      margin: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.8rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      position: relative;
+      font-weight: 600;
+      color: var(--text-color);
+      transition: color 0.3s;
+    }
+
+    nav ul li a {
+      color: inherit;
+      text-decoration: none;
+      padding: 0.5rem 0;
+    }
+
+    nav ul li::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--primary-color);
+      transition: width 0.3s;
+    }
+
+    nav ul li:hover {
+      color: var(--primary-color);
+    }
+
+    nav ul li:hover::after {
+      width: 100%;
+    }
+
+    /* Active nav item styling */
+    nav ul li.active-nav a {
+      color: var(--primary-color);
+    }
+
+    nav ul li.active-nav::after {
+      width: 100%;
+    }
+
+    /* Hero Section with Profile Image */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      padding: 7rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .profile-image {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary-color);
+      box-shadow: 0 0 25px rgba(187, 134, 252, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-image:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 35px rgba(187, 134, 252, 0.6);
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    .hero-content h2 {
+      font-size: 2.8rem;
+      margin: 0 0 0.5rem;
+      color: var(--primary-color);
+    }
+
+    .hero-content h3 {
+      font-size: 1.5rem;
+      margin: 0 0 1.5rem;
+      color: var(--secondary-color);
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .cta-button {
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button.primary {
+      background-color: var(--primary-color);
+      color: #121212;
+    }
+
+    .cta-button.primary:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(3, 218, 198, 0.3);
+    }
+
+    .cta-button.secondary {
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .cta-button.secondary:hover {
+      background-color: var(--primary-color);
+      color: #121212;
+      transform: translateY(-3px);
+    }
+
+    /* Main container */
+    main {
+      max-width: 900px;
+      margin: 0 auto 3rem auto;
+      padding: 0 1.5rem;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    /* Section Heading */
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section h2 {
+      border-bottom: 3px solid var(--primary-color);
+      padding-bottom: 0.3rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      font-size: 2rem;
+      letter-spacing: 0.05rem;
+    }
+
+    /* About Section */
+    #about p {
+      max-width: 700px;
+      font-size: 1.1rem;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+      white-space: pre-line;
+    }
+
+    /* Projects */
+    .project {
+      background: #1e1e1e;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(187, 134, 252, 0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(187, 134, 252, 0.6);
+    }
+
+    .project h3 {
+      margin: 0 0 0.3rem 0;
+      color: var(--primary-color);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .project span {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      font-weight: 600;
+    }
+
+    .project p {
+      margin: 0.8rem 0 0 0;
+      color: var(--text-color);
+      white-space: pre-line;
+    }
+
+    /* Skills List */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .skill {
+      background-color: var(--primary-color);
+      padding: 0.4rem 1rem;
+      border-radius: 15px;
+      color: #121212;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 0 5px var(--primary-color);
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    .skill:hover {
+      background-color: var(--secondary-color);
+      color: #121212;
+      transform: translateY(-2px);
+    }
+
+    /* Work Experience */
+    .experience-item {
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--primary-color);
+      padding-left: 1.2rem;
+      background: #1a1a1a;
+      border-radius: 6px;
+      box-shadow: 0 0 7px rgba(187, 134, 252, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+    .experience-item:hover {
+      box-shadow: 0 0 14px rgba(187, 134, 252, 0.45);
+    }
+    .experience-item h4 {
+      margin: 0;
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .experience-item span {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      font-weight: 600;
+    }
+    .experience-item p {
+      margin: 0.5rem 0 0 0;
+      white-space: pre-line;
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+
+    /* Contact */
+    #contact p {
+      font-size: 1.1rem;
+      color: var(--text-color);
+      margin-bottom: 0.8rem;
+      word-wrap: break-word;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #contact a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    #contact a:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem 0;
+      font-size: 0.9rem;
+      color: var(--muted-text-color);
+      border-top: 1px solid var(--border-color);
+      margin-top: 3rem;
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+      0% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 6rem 1.5rem 3rem;
+      }
+      
+      .profile-image {
+        width: 220px;
+        height: 220px;
+      }
+      
+      .hero-content h2 {
+        font-size: 2.3rem;
+      }
+      
+      .hero-content h3 {
+        font-size: 1.3rem;
+      }
+      
+      .cta-buttons {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 0.8rem 1.2rem;
+      }
+      
+      nav ul {
+        position: fixed;
+        flex-direction: column;
+        background: rgba(30, 30, 30, 0.95);
+        backdrop-filter: blur(10px);
+        top: 60px;
+        right: -100%;
+        width: 70%;
+        height: calc(100vh - 60px);
+        padding: 2rem;
+        gap: 1.5rem;
+        transition: right 0.4s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+      }
+
+      nav ul.active {
+        right: 0;
+      }
+
+      nav ul li {
+        font-size: 1.2rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .menu-toggle {
+        display: block;
+        cursor: pointer;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        z-index: 1001;
+      }
+      
+      main {
+        padding: 0 1rem;
+      }
+      
+      .project h3, .experience-item h4 {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    /* Hide menu toggle by default */
+    .menu-toggle {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <h1>Pratik Vekariya</h1>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul id="navbar">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero" id="home">
+    <img src="prit.jpg" alt="Pratik Vekariya" class="profile-image">
+    <div class="hero-content">
+      <h2>Pratik Vekariya</h2>
+      <h3>Full-Stack Developer</h3>
+      <p>Computer Engineering student passionate about creating innovative web solutions with modern technologies. Skilled in Spring Boot, React.js, and REST APIs with experience in developing secure, scalable applications.</p>
+      <div class="cta-buttons">
+        <a href="#projects" class="cta-button primary">View Projects</a>
+        <a href="#contact" class="cta-button secondary">Contact Me</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section id="about" aria-label="About Pratik Vekariya">
+      <h2>About Me</h2>
+      <p>
+        Pratik Vekariya is a Computer Engineering student at L.D. College Of Engineering with a current CGPA of 8.75 expected to graduate in 2026.
+        A passionate full-stack and backend developer skilled in Spring Boot, React.js, and REST APIs. Experienced in developing secure applications 
+        with JWT authentication, and integrating payment gateways like Stripe and Razorpay. Also interested in Data Science and Machine Learning.
+      </p>
+    </section>
+
+    <section id="projects" aria-label="Projects by Pratik Vekariya">
+      <h2>Projects</h2>
+
+      <div class="project">
+        <h3>Basic Food Delivery Website <span>(Aug 2023 - Oct 2023)</span></h3>
+        <p>Developed a full-stack food delivery app using Spring Boot and ReactJS, allowing users to browse restaurants, add items to cart, and place orders.
+        Implemented JWT-based authentication with role-based access for users and admins. Backend managed authentication, menus, and orders via REST APIs.</p>
+      </div>
+
+      <div class="project">
+        <h3>API Marketplace Website <span>(Dec 2024 - Feb 2025)</span></h3>
+        <p>Built a full-stack API marketplace platform with role-based JWT authentication for admins, providers, and consumers. Implemented API publishing, subscription management, usage tracking,
+           and file uploads via AWS S3 using MongoDB for storage. Integrated a responsive UI for browsing APIs, managing subscriptions, and viewing analytics.</p>
+      </div>
+
+      <div class="project">
+        <h3>E-commerce Backend API <span>(Mar 2025)</span></h3>
+        <p>Developed a secure e-commerce backend using Spring Boot with RESTful APIs for product, cart, and order management.
+         Implemented JWT auth, role-based access, and Stripe/Razorpay for payments.</p>
+      </div>
+    </section>
+
+    <section id="skills" aria-label="Technical Skills of Pratik Vekariya">
+      <h2>Technical Skills</h2>
+      <div class="skills-container">
+        <span class="skill">C</span>
+        <span class="skill">C++</span>
+        <span class="skill">JavaScript</span>
+        <span class="skill">Java</span>
+        <span class="skill">HTML</span>
+        <span class="skill">CSS</span>
+        <span class="skill">Python</span>
+        <span class="skill">Spring Boot</span>
+        <span class="skill">jQuery</span>
+        <span class="skill">React.js</span>
+        <span class="skill">Hibernate/JPA</span>
+        <span class="skill">MySQL</span>
+        <span class="skill">MongoDB</span>
+        <span class="skill">JUnit</span>
+        <span class="skill">Mockito</span>
+        <span class="skill">Swagger</span>
+        <span class="skill">Git</span>
+        <span class="skill">Postman</span>
+        <span class="skill">RESTful APIs</span>
+        <span class="skill">JWT Authentication</span>
+        <span class="skill">MVC Architecture</span>
+        <span class="skill">Machine Learning Basics</span>
+      </div>
+    </section>
+
+    <section id="experience" aria-label="Work Experience of Pratik Vekariya">
+      <h2>Work Experience & Internships</h2>
+
+      <div class="experience-item">
+        <h4>CSRBox AI Internship <span>(July 2025)</span></h4>
+        <p>Completed an AI internship where I developed AI Symptoms Health, a machine learning-based tool for predicting possible health conditions from user-reported symptoms.</p>
+      </div>
+
+      <div class="experience-item">
+        <h4>Self-Initiated Data Science Training <span>(May 2024 - July 2024)</span></h4>
+        <p>Studied data analysis, machine learning, and model evaluation using Python. Applied concepts in personal projects involving exploratory data analysis, regression, and classification tasks.</p>
+      </div>
+
+      <div class="experience-item">
+        <h4>Achievement Highlights</h4>
+        <ul style="color: var(--text-color); margin-top: 0; padding-left: 1rem;">
+          <li>Participated in a national-level Hackathon (2024), collaborated in a team to build a working prototype under a deadline.</li>
+          <li>Solved over 200+ Data Structures and Algorithms problems on LeetCode, GeeksforGeeks, and CodeStudio.</li>
+          <li>Consistently upskilling through Coursera, YouTube, and documentation to stay updated with industry trends.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact" aria-label="Contact Information for Pratik Vekariya">
+      <h2>Contact</h2>
+      <p>📧 Email: <a href="mailto:vekariyapratik00@gmail.com">vekariyapratik00@gmail.com</a></p>
+      <p>📞 Phone: <a href="tel:+919727599342">+91 97275 99342</a></p>
+      <p>💻 GitHub: <a href="https://github.com/tortraise?tab=repositories" target="_blank" rel="noopener noreferrer">Pratik-vekariya</a></p>
+      <p>🔗 LinkedIn: <a href="https://www.linkedin.com/in/vekariya-pratik-0bb487281/" target="_blank" rel="noopener noreferrer">linkedin.com/in/pratik-vekariya</a></p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Pratik Vekariya — Portfolio Website
+  </footer>
+
+  <script>
+    // Responsive menu toggle for mobile
+    const menuToggle = document.getElementById('menu-toggle');
+    const navUl = document.getElementById('navbar');
+    
+    menuToggle.addEventListener('click', () => {
+      navUl.classList.toggle('active');
+      menuToggle.textContent = navUl.classList.contains('active') ? '✕' : '☰';
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navUl.classList.remove('active');
+        menuToggle.textContent = '☰';
+      });
+    });
+
+    // Highlight current nav item on scroll
+    const sections = document.querySelectorAll('section, .hero');
+    const navLinks = document.querySelectorAll('nav ul li');
+
+    function highlightNav() {
+      let current = '';
+      const scrollPosition = window.pageYOffset + 100;
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active-nav');
+        if (link.querySelector('a').getAttribute('href') === '#' + current) {
+          link.classList.add('active-nav');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', highlightNav);
+    window.addEventListener('load', highlightNav);
+  </script>
+</body>
+</html>
